@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
 import style from './searchable-layout.module.css';
+
 export default function SearchableLayout({
   children,
 }: {
@@ -37,8 +38,8 @@ export default function SearchableLayout({
           placeholder="검색어를 입력하세요 ..."
         />
         <button onClick={onSubmit}>검색</button>
-        {children}
       </div>
+      {children}
     </div>
   );
 }
