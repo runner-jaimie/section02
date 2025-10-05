@@ -3,19 +3,41 @@ import style from './index.module.css';
 import { ReactNode } from 'react';
 import books from '@/mock/books.json';
 import BookItem from '@/components/book-item';
+import { InferGetServerSidePropsType } from 'next';
+import fetchBooks from '@/lib/fetch-books';
+import fetchRandomBooks from '@/lib/fetch-random-books';
 
-export default function Home() {
+export const getServerSideProps = async () => {
+  // 컴포넌트보다 먼저 실행되어서, 컴포넌트에 필요한 데이터 불러오는 함수
+  // const allBooks = await fetchBooks();  // 이 두함수는 직렬로 함수가 실행 즉 모든 도서를 불러온 후 추천 도서를 불러오기 때문에
+  // const recoBooks = await fetchRandomBooks();
+
+  // 위의 코드를 아래처럼 바꿔주면 두 함수가 병렬로 실행됨 (동시에 2개의 api가 실행됨)
+  const [allBooks, recoBooks] = await Promise.all([
+    fetchBooks(),
+    fetchRandomBooks(),
+  ]);
+
+  return {
+    props: { allBooks, recoBooks }, // 컴포넌트에 전달할 데이터
+  };
+};
+
+export default function Home({
+  allBooks,
+  recoBooks,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div className={style.container}>
       <section>
         <h3>지금 추천하는 도서</h3>
-        {books.map((book) => (
+        {recoBooks.map((book) => (
           <BookItem key={book.id} {...book} />
         ))}
       </section>
       <section>
         <h3>등록된 모든 도서</h3>
-        {books.map((book) => (
+        {allBooks.map((book) => (
           <BookItem key={book.id} {...book} />
         ))}
       </section>
