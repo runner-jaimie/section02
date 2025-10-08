@@ -34,6 +34,9 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   if (!book) {
     return {
       notFound: true,
+      // false: 404 페이지를 보여줌
+      // blocking: 서버에서 렌더링 시도 (ssr 방식)
+      // true: ssr 방식 + 데이터가 없는 풀백 상태의 페이지부터 변환
     };
   }
 
