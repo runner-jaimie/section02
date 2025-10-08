@@ -37,6 +37,7 @@ export const getStaticProps = async () => {
       allBooks,
       recoBooks,
     }, // 컴포넌트에 전달할 데이터
+    // ISR 설정 SSG(매우 빠른 속도로 응답가능) + SSR(최신 데이터 반영 가능) 이 두가지를 모두 만족 하는 방법
     revalidate: 3, // 설정한 초마다 페이지를 재생성 (ISR - Incremental Static Regeneration)
   };
 };
