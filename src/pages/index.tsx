@@ -33,7 +33,11 @@ export const getStaticProps = async () => {
   ]);
 
   return {
-    props: { allBooks, recoBooks }, // 컴포넌트에 전달할 데이터
+    props: {
+      allBooks,
+      recoBooks,
+    }, // 컴포넌트에 전달할 데이터
+    revalidate: 3, // 설정한 초마다 페이지를 재생성 (ISR - Incremental Static Regeneration)
   };
 };
 export default function Home({
