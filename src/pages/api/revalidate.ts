@@ -8,6 +8,7 @@ export default async function handler(
     await res.revalidate('/');
     return res.json({ revalidated: true });
   } catch (err) {
+    console.error('Error revalidating:', err);
     return res.status(500).send('Error revalidating');
   }
 }
