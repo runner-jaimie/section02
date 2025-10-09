@@ -9,6 +9,7 @@ import //GetServerSidePropsContext,
 import fetchBooks from '@/lib/fetch-books';
 import { BookData } from '@/types';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 // 서버사이드 렌더링 (SSR) - 매 요청마다 서버에서 데이터를 불러와서 렌더링
 // export const getServerSideProps = async (
@@ -65,6 +66,15 @@ export default function Page() {
 
   return (
     <div>
+      <Head>
+        <title>한입북스 - 검색결과</title>
+        <meta property="og:image" content="/thumbnail.png" />
+        <meta property="og:title" content="한입북스" />
+        <meta
+          property="og:description"
+          content="한입북스에 등록된 도서들을 만나보세요!"
+        />
+      </Head>
       {books.map((book) => (
         <BookItem key={book.id} {...book} />
       ))}
